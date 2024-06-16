@@ -36,8 +36,8 @@ model User {
 model Complainer {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now()) 
-  typeComplainer String
-  nivelComplainer String
+  typeComplainer TypeComplainer
+  nivelComplainer NivelComplainer
   imageComplainer String
   userId Int
   user User @relation(fields: [userId], references: [id])
@@ -75,4 +75,23 @@ model Comments {
   comments PostBlog? @relation(fields: [commentsId], references: [id])
   commentsId Int?
 
+}
+
+enum TypeComplainer {
+  BRIFERY // CHANTAGEM
+  HUMILIATION // HUMILHAÇÃO
+  AGGRESSION // AGRESSAO
+  PERSECUTION // PERSEGUIÇÃO
+  PATRIMONIAL_VIOLATION // VIOLAÇÃO PATRIMONIAL
+  VERBAL_HARASSMENT //ASSEDIO VERBAL
+  PSUCHOLOGICAL_HARASSMENT // ASSEDIO PSICOLOGICO
+  PHYSICAL_HARASSMENT // ASSEFIO FISICO
+  OTHERS // OUTROS
+
+}
+
+enum NivelComplainer {
+  LIGHT // LEVE
+  MEDIUM // MEDIO
+  SEVERE // GRAVE
 }

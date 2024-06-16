@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String
+  password String
+  tel String?
+  marital_status String
+  cpf String
+  age Int
+  sex String
+  createedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  imageDoc String
+  imageSelf String
+  imageDocSelf String
+  complainer Complainer[]
+  postBlog PostBlog[]
+}
+
+model Complainer {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now()) 
+  typeComplainer String
+  nivelComplainer String
+  imageComplainer String
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  locationId Int @unique
+  location Location @relation(fields: [locationId], references: [id])
+
+}
+
+model Location {
+  id Int @id @default(autoincrement())
+  CreatedAt DateTime @default(now())
+  latitude Float
+  longitude Float
+  complainer Complainer?
+
+}
+
+model PostBlog {
+  id Int @id @default(autoincrement())
+  description String
+  imagePost String
+  createdAt DateTime @default(now())
+  uptadetAt DateTime @updatedAt
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  comments Comments[]
+}
+
+model Comments {
+  id Int @id 
+  description String
+  imageCommets String
+  createdAt DateTime @default(now())
+  uptadeAt DateTime @updatedAt
+  comments PostBlog? @relation(fields: [commentsId], references: [id])
+  commentsId Int?
+
+}

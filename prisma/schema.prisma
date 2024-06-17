@@ -43,7 +43,7 @@ model Complainer {
   user User @relation(fields: [userId], references: [id])
   locationId Int @unique
   location Location @relation(fields: [locationId], references: [id])
-
+//adicionar description
 }
 
 model Location {

@@ -1,27 +1,14 @@
-import Fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
 import dotenv from "dotenv";
-import app from "./app";
 
 dotenv.config();
 
-const server = Fastify();
+const server: FastifyInstance = fastify({ logger: true });
 
-server.register(cors, {
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-});
-
-server.register(app);
-
-const start = async () => {
-  try {
-    await server.listen(process.env.PORT || 3000);
-    server.log.info(`Servidor rodando`);
-  } catch (error) {
-    server.log.error(error);
-  }
-};
-
-start();
+server.listen(
+  {
+    port: 3100,
+  },
+  () => console.log("Server is running on port 3100")
+);

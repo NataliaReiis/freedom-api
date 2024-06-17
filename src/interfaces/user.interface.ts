@@ -12,3 +12,21 @@ export interface User {
   imageSelf: string;
   imageDocSelf: string;
 }
+
+export interface UserCreate {
+  name: string;
+  email: string;
+  password: string;
+  tel: string;
+  marital_status: string;
+  cpf: string;
+  age: number;
+  sex: string;
+  imageDoc: string;
+  imageSelf: string;
+  imageDocSelf: string;
+}
+
+export interface UserRepository {
+  create(data: UserCreate): Promise<User>;
+}

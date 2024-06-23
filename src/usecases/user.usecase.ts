@@ -1,6 +1,13 @@
-import { User, UserCreate, UserRepository } from '../interfaces/user.interface'
+// Aqui vai toda a logica, regras de negocios e afins.
+// Também poderia ser o arquivo de controllers
+
+import {
+  UpdatedUser,
+  User,
+  UserCreate,
+  UserRepository,
+} from '../interfaces/user.interface'
 import { UserRepositoryPrisma } from '../repositories/user.repository'
-//Aqui vai toda a logica, regras de negocios e afins.
 
 class UserUseCase {
   private userRepository: UserRepository
@@ -23,7 +30,7 @@ class UserUseCase {
   }: UserCreate): Promise<User> {
     const verifyIfUserExists = await this.userRepository.findByEmail(email)
     if (verifyIfUserExists) {
-      throw new Error('User already exists')
+      Error('User already exists')
     }
 
     const result = await this.userRepository.create({
@@ -45,6 +52,15 @@ class UserUseCase {
 
   async getAll(): Promise<User[]> {
     return await this.userRepository.findAll()
+  }
+
+  async update(id: string, data: Partial<UpdatedUser>): Promise<User> {
+    const userExists = await this.userRepository.findById(id)
+    if (!userExists) {
+      throw new Error('User not found')
+    }
+    const updatedUser = await this.userRepository.update(id, data)
+    return updatedUser
   }
 }
 

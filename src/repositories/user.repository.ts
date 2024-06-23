@@ -1,4 +1,5 @@
 //Operações com banco de dados vem aqui
+
 import { prisma } from '../database/prisma-client'
 import { User, UserRepository, UserCreate } from '../interfaces/user.interface'
 
@@ -22,6 +23,21 @@ class UserRepositoryPrisma implements UserRepository {
 
   async findAll(): Promise<User[]> {
     return await prisma.user.findMany()
+  }
+
+  async update(id: string, data: Partial<UserCreate>): Promise<User> {
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data,
+    })
+    return updatedUser
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    })
+    return user || null
   }
 }
 

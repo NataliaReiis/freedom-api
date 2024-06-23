@@ -29,8 +29,21 @@ export interface UserCreate {
   imageDocSelf: string
 }
 
+export interface UpdatedUser {
+  email?: string
+  name?: string
+  password?: string
+  tel?: string | null
+  marital_status?: string
+  cpf?: string
+  age?: number
+  sex?: string
+}
+
 export interface UserRepository {
   create(data: UserCreate): Promise<User>
   findByEmail(email: string): Promise<User | null>
   findAll(): Promise<User[]>
+  findById(id: string): Promise<User | null>
+  update(id: string, data: Partial<UpdatedUser>): Promise<User>
 }

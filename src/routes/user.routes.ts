@@ -1,6 +1,6 @@
 import fastify, { FastifyInstance } from 'fastify'
 import { UserUseCase } from '../usecases/user.usecase'
-import { UserCreate } from '../interfaces/user.interface'
+import { UpdatedUser, UserCreate } from '../interfaces/user.interface'
 
 export async function userRoutes(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase()
@@ -30,4 +30,18 @@ export async function userRoutes(fastify: FastifyInstance) {
       reply.status(500).send({ message: 'Internal server error' })
     }
   })
+
+  fastify.put<{ Params: { id: string }; Body: Partial<UpdatedUser> }>(
+    '/:id',
+    async (req, reply) => {
+      try {
+        const { id } = req.params
+        const data = req.body
+        const updatedUser = await userUseCase.update(id, data)
+        return reply.send(updatedUser)
+      } catch (error) {
+        reply.status(500).send({ message: 'Internal server error' })
+      }
+    }
+  )
 }

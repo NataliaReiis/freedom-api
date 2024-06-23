@@ -1,4 +1,4 @@
-import { FastifyInstance } from "fastify";
+/* import { FastifyInstance } from "fastify";
 
 export function userRoutes(fastify: FastifyInstance) {
   fastify.post("/", (req, reply) => {
@@ -8,4 +8,4 @@ export function userRoutes(fastify: FastifyInstance) {
       reply.send(error);
     }
   });
-}
+} */

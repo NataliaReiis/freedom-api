@@ -39,6 +39,7 @@ model Complainer {
   typeComplainer TypeComplainer
   nivelComplainer NivelComplainer
   imageComplainer String
+  description String
   userId Int
   user User @relation(fields: [userId], references: [id])
   locationId Int @unique

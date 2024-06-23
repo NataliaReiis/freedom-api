@@ -1,6 +1,6 @@
 //Operações com banco de dados vem aqui
-import { prisma } from "../database/prisma-client";
-import { User, UserRepository, UserCreate } from "../interfaces/user.interface";
+import { prisma } from '../database/prisma-client'
+import { User, UserRepository, UserCreate } from '../interfaces/user.interface'
 
 class UserRepositoryPrisma implements UserRepository {
   async create(data: UserCreate): Promise<User> {
@@ -8,9 +8,9 @@ class UserRepositoryPrisma implements UserRepository {
       data: {
         ...data,
       },
-    });
-    return result;
+    })
+    return result
   }
 }
 
-export { UserRepositoryPrisma };
+export { UserRepositoryPrisma }

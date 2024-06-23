@@ -62,6 +62,14 @@ class UserUseCase {
     const updatedUser = await this.userRepository.update(id, data)
     return updatedUser
   }
+
+  async delete(id: string): Promise<void> {
+    const userExists = await this.userRepository.findById(id)
+    if (!userExists) {
+      throw new Error('User not found')
+    }
+    await this.userRepository.delete(id)
+  }
 }
 
 export { UserUseCase }

@@ -25,6 +25,13 @@ class UserRepositoryPrisma implements UserRepository {
     return await prisma.user.findMany()
   }
 
+  async findById(id: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: { id },
+    })
+    return user || null
+  }
+
   async update(id: string, data: Partial<UserCreate>): Promise<User> {
     const updatedUser = await prisma.user.update({
       where: { id },
@@ -33,11 +40,10 @@ class UserRepositoryPrisma implements UserRepository {
     return updatedUser
   }
 
-  async findById(id: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({
+  async delete(id: string): Promise<void> {
+    await prisma.user.delete({
       where: { id },
     })
-    return user || null
   }
 }
 

@@ -46,4 +46,5 @@ export interface UserRepository {
   findAll(): Promise<User[]>
   findById(id: string): Promise<User | null>
   update(id: string, data: Partial<UpdatedUser>): Promise<User>
+  delete(id: string): Promise<void>
 }

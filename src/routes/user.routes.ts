@@ -1,6 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify'
 import { UserUseCase } from '../usecases/user.usecase'
 import { UpdatedUser, UserCreate } from '../interfaces/user.interface'
+import { error } from 'console'
 
 export async function userRoutes(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase()
@@ -44,4 +45,14 @@ export async function userRoutes(fastify: FastifyInstance) {
       }
     }
   )
+
+  fastify.delete('/:id', async (req, reply) => {
+    try {
+      const { id } = req.params as { id: string }
+      await userUseCase.delete(id)
+      reply.status(200).send({ message: 'User deleted' })
+    } catch (error) {
+      reply.status(500).send({ message: 'Internal server error' })
+    }
+  })
 }

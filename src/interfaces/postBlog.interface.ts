@@ -1,5 +1,5 @@
 export interface PostBlog {
-  id: string;
-  description: string;
-  imagePost: string;
+  id: string
+  description: string
+  imagePost: string
 }

@@ -19,6 +19,10 @@ class UserRepositoryPrisma implements UserRepository {
     })
     return result || null
   }
+
+  async findAll(): Promise<User[]> {
+    return await prisma.user.findMany()
+  }
 }
 
 export { UserRepositoryPrisma }

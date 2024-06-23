@@ -42,6 +42,10 @@ class UserUseCase {
     console.log(result)
     return result
   }
+
+  async getAll(): Promise<User[]> {
+    return await this.userRepository.findAll()
+  }
 }
 
 export { UserUseCase }

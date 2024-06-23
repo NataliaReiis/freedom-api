@@ -1,4 +1,4 @@
-import { UserCreate, UserRepository } from "../interfaces/user.interface";
+import { User, UserCreate, UserRepository } from "../interfaces/user.interface";
 import { UserRepositoryPrisma } from "../repositories/user.repository";
 //Aqui vai toda a logica, regras de negocios e afins.
 
@@ -8,5 +8,9 @@ class UserUseCase {
     this.userRepository = new UserRepositoryPrisma();
   }
 
-  async create({ ...name }: UserCreate): Promise<User> {}
+  async create({ name,email, age, cpf, imageDoc,imageDocSelf,imageSelf,marital_status,password,sex,tel }: UserCreate): Promise<User> {
+    
+  }
 }
+
+export { UserUseCase };

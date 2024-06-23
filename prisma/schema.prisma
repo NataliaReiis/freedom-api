@@ -15,7 +15,7 @@ datasource db {
 
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   email String @unique
   name String
   password String
@@ -24,32 +24,34 @@ model User {
   cpf String
   age Int
   sex String
-  createedAt DateTime @default(now())
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   imageDoc String
   imageSelf String
   imageDocSelf String
   complainer Complainer[]
   postBlog PostBlog[]
+
+  @@map("users")
 }
 
 model Complainer {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   createdAt DateTime @default(now()) 
   typeComplainer TypeComplainer
   nivelComplainer NivelComplainer
   imageComplainer String
   description String
-  userId Int
+  userId String
   user User @relation(fields: [userId], references: [id])
-  locationId Int @unique
+  locationId String @unique
   location Location @relation(fields: [locationId], references: [id])
 //adicionar description
 }
 
 model Location {
-  id Int @id @default(autoincrement())
-  CreatedAt DateTime @default(now())
+  id String @id @default(uuid())
+  createdAt DateTime @default(now())
   latitude Float
   longitude Float
   complainer Complainer?
@@ -57,24 +59,24 @@ model Location {
 }
 
 model PostBlog {
-  id Int @id @default(autoincrement())
+  id String @id @default(uuid())
   description String
   imagePost String
   createdAt DateTime @default(now())
-  uptadetAt DateTime @updatedAt
-  userId Int
+  uptdatedAt DateTime @updatedAt
+  userId String
   user User @relation(fields: [userId], references: [id])
   comments Comments[]
 }
 
 model Comments {
-  id Int @id 
+  id String @id @default(uuid())
   description String
-  imageCommets String
+  imageComments String
   createdAt DateTime @default(now())
-  uptadeAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
   comments PostBlog? @relation(fields: [commentsId], references: [id])
-  commentsId Int?
+  commentsId String
 
 }
 

@@ -4,7 +4,7 @@ import {
   PostBlogCreate,
   PostBlogRepository,
   PostBlogUpdated,
-} from '../interfaces/postBlog.interface'
+} from '../interfaces/post-blog.interface'
 
 class PostBlogRepositoryPrisma implements PostBlogRepository {
   async create(data: PostBlogCreate): Promise<PostBlog> {

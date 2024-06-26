@@ -1,7 +1,6 @@
 import fastify, { FastifyInstance } from 'fastify'
 import { UserUseCase } from '../usecases/user.usecase'
 import { UpdatedUser, UserCreate } from '../interfaces/user.interface'
-import { error } from 'console'
 
 export async function userRoutes(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase()

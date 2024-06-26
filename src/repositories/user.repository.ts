@@ -29,6 +29,7 @@ class UserRepositoryPrisma implements UserRepository {
     const user = await prisma.user.findUnique({
       where: { id },
     })
+    //n precisa do null
     return user || null
   }
 

@@ -3,8 +3,8 @@ import {
   PostBlogCreate,
   PostBlogUpdated,
   PostBlogRepository,
-} from '../interfaces/postBlog.interface'
-import { PostBlogRepositoryPrisma } from '../repositories/postBlog.respository'
+} from '../interfaces/post-blog.interface'
+import { PostBlogRepositoryPrisma } from '../repositories/post-blog.respository'
 
 class PostBlogUseCase {
   private postBlogRepository: PostBlogRepository

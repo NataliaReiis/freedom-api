@@ -13,88 +13,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id String @id @default(uuid())
-  email String @unique
-  name String
-  password String
-  tel String?
+  id             String      @id @default(uuid())
+  email          String      @unique
+  name           String
+  password       String
+  tel            String?
   marital_status String
-  cpf String
-  age Int
-  sex String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  imageDoc String
-  imageSelf String
-  imageDocSelf String
-  complainer Complainer[]
-  postBlog PostBlog[]
+  cpf            String
+  age            Int
+  sex            String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  imageDoc       String
+  imageSelf      String
+  imageDocSelf   String
+  Complaint      Complaint[]
+  postBlog       PostBlog[]
 
   @@map("users")
 }
 
-model Complainer {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now()) 
-  typeComplainer TypeComplainer
-  nivelComplainer NivelComplainer
-  imageComplainer String
-  description String
-  userId String
-  user User @relation(fields: [userId], references: [id])
-  locationId String @unique
-  location Location @relation(fields: [locationId], references: [id])
-//adicionar description
+model Complaint {
+  id             String         @id @default(uuid())
+  createdAt      DateTime       @default(now())
+  typeComplaint  TypeComplaint
+  nivelComplaint NivelComplaint
+  imageComplaint String
+  description    String
+  userId         String
+  user           User           @relation(fields: [userId], references: [id])
+  locationId     String         @unique
+  location       Location       @relation(fields: [locationId], references: [id])
 }
 
 model Location {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now())
-  latitude Float
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  latitude  Float
   longitude Float
-  complainer Complainer?
-
+  Complaint Complaint?
 }
 
 model PostBlog {
-  id String @id @default(uuid())
+  id          String    @id @default(uuid())
   description String
-  imagePost String
-  createdAt DateTime @default(now())
-  uptdatedAt DateTime @updatedAt
-  userId String
-  user User @relation(fields: [userId], references: [id])
-  comments Comments[]
+  imagePost   String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  comment     Comment[]
 }
 
-model Comments {
-  id String @id @default(uuid())
-  description String
-  imageComments String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  comments PostBlog? @relation(fields: [commentsId], references: [id])
-  commentsId String
-
+model Comment {
+  id           String    @id @default(uuid())
+  description  String
+  imageComment String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  postBlog     PostBlog? @relation(fields: [postBlogId], references: [id])
+  postBlogId   String
 }
 
-enum TypeComplainer {
+enum TypeComplaint {
   BRIFERY // CHANTAGEM
   HUMILIATION // HUMILHAÇÃO
-  AGGRESSION // AGRESSAO
+  AGGRESSION // AGRESSÃO
   PERSECUTION // PERSEGUIÇÃO
   PATRIMONIAL_VIOLATION // VIOLAÇÃO PATRIMONIAL
-  VERBAL_HARASSMENT //ASSEDIO VERBAL
-  PSUCHOLOGICAL_HARASSMENT // ASSEDIO PSICOLOGICO
-  PHYSICAL_HARASSMENT // ASSEFIO FISICO
+  VERBAL_HARASSMENT //ASSÉDIO VERBAL
+  PSUCHOLOGICAL_HARASSMENT // ASSÉDIO PSICOLÓGICO
+  PHYSICAL_HARASSMENT // ASSÉDIO FÍSICO
   OTHERS // OUTROS
-
 }
 
-enum NivelComplainer {
+enum NivelComplaint {
   LIGHT // LEVE
-  MEDIUM // MEDIO
+  MEDIUM // MÉDIO
   SEVERE // GRAVE
 }

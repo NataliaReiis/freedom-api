@@ -1,0 +1,54 @@
+import {
+  PostBlog,
+  PostBlogCreate,
+  PostBlogUpdated,
+  PostBlogRepository,
+} from '../interfaces/postBlog.interface'
+import { PostBlogRepositoryPrisma } from '../repositories/postBlog.respository'
+
+class PostBlogUseCase {
+  private postBlogRepository: PostBlogRepository
+  constructor() {
+    this.postBlogRepository = new PostBlogRepositoryPrisma()
+  }
+
+  async create({
+    description,
+    imagePost,
+    userId,
+  }: PostBlogCreate): Promise<PostBlog> {
+    const result = await this.postBlogRepository.create({
+      description,
+      imagePost,
+      userId,
+    })
+    return result
+  }
+
+  async getAll(): Promise<PostBlog[]> {
+    return await this.postBlogRepository.findAll()
+  }
+
+  async getId(id: string): Promise<PostBlog | null> {
+    return await this.postBlogRepository.findById(id)
+  }
+
+  async update(id: string, data: Partial<PostBlog>): Promise<PostBlog> {
+    const postExists = await this.postBlogRepository.findById(id)
+    if (!postExists) {
+      throw new Error('Post not found')
+    }
+    const updatedPostBlog = await this.postBlogRepository.update(id, data)
+    return updatedPostBlog
+  }
+
+  async delete(id: string): Promise<void> {
+    const postExists = await this.postBlogRepository.findById(id)
+    if (!postExists) {
+      throw new Error('Post not found')
+    }
+    const deletePostBlog = await this.postBlogRepository.delete(id)
+  }
+}
+
+export { PostBlogUseCase }

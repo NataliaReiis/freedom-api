@@ -1,4 +1,4 @@
-export interface User {
+export type User = {
   id: string
   email: string
   name: string
@@ -15,7 +15,7 @@ export interface User {
   updatedAt: Date
 }
 
-export interface UserCreate {
+export type UserCreate = {
   email: string
   name: string
   password: string
@@ -28,8 +28,7 @@ export interface UserCreate {
   imageSelf: string
   imageDocSelf: string
 }
-
-export interface UpdatedUser {
+export type UpdatedUser = {
   email?: string
   name?: string
   password?: string

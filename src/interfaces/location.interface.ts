@@ -1,15 +1,19 @@
-export interface Location {
+export type Location = {
   id: string
   latitude: number
   longitude: number
 }
 
-export interface CreateLocation {
+export type CreateLocation = {
   latitude: number
   longitude: number
 }
 
-export interface UpdatedLocation {
+export type UpdatedLocation = {
   latitude?: number
   longitude?: number
+}
+
+export interface LocationRepository {
+  create(data: CreateLocation): Promise<Location>
 }

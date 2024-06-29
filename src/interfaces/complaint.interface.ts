@@ -1,22 +1,34 @@
-import { Location } from './location.interface'
+import { NivelComplaint, TypeComplaint, Location } from '@prisma/client'
 
-export interface Complaint {
+export type Complaint = {
   id: string
-  typeComplainer: string
-  nivelComplainer: string
-  imageComplainer: string
+  typeComplaint: TypeComplaint
+  nivelComplaint: NivelComplaint
+  imageComplait: string
   description: string
-  location: Location[]
+  location: Location
+  UserId: string
+  createdAt: Date
 }
 
-export interface CreatComplainer {
-  name: string
-  email: string
-  phone: string
+export type CreateComplaint = {
+  typeComplaint: TypeComplaint
+  nivelComplaint: NivelComplaint
+  imageComplaint: string
+  description: string
+  location: Location
+  UserId: string
 }
 
-export interface UpdatedComplainer {
-  name?: string
-  email?: string
-  phone?: string
+export type UpdatedComplaint = {
+  typeComplaint?: TypeComplaint
+  nivelComplaint?: NivelComplaint
+  imageComplaint?: string
+  description?: string
+  UserId: string
+}
+
+export interface ComplaintRepository {
+  create(data: CreateComplaint): Promise<Complaint>
+  findById(id: string): Promise<Complaint | null>
 }

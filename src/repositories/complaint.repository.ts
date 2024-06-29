@@ -1,8 +1,10 @@
 import { prisma } from '../database/prisma-client'
+import { UpdatedComment } from '../interfaces/comment.interface'
 import {
   Complaint,
   ComplaintRepository,
   CreateComplaint,
+  UpdatedComplaint,
 } from '../interfaces/complaint.interface'
 import { NivelComplaint, TypeComplaint, Location } from '@prisma/client'
 
@@ -10,14 +12,16 @@ class ComplaintRepositoryPrisma implements ComplaintRepository {
   async create(data: CreateComplaint): Promise<Complaint> {
     const result = await prisma.complaint.create({
       data: {
-        userId: data.UserId,
+        userId: data.userId,
         description: data.description,
         typeComplaint: data.typeComplaint as TypeComplaint,
         nivelComplaint: data.nivelComplaint as NivelComplaint,
         imageComplaint: data.imageComplaint,
-        location: {
-          create: data.location,
-        },
+        locationId: data.locationId,
+      },
+      include: {
+        location: true,
+        user: true,
       },
     })
 
@@ -30,6 +34,32 @@ class ComplaintRepositoryPrisma implements ComplaintRepository {
     })
 
     return complaint
+  }
+
+  async findAll(): Promise<Complaint[]> {
+    return await prisma.complaint.findMany({
+      include: {
+        location: true,
+        user: true,
+      },
+    })
+  }
+
+  async update(
+    id: string,
+    data: Partial<UpdatedComplaint>
+  ): Promise<Complaint> {
+    const updatedComplaint = await prisma.complaint.update({
+      where: { id },
+      data,
+    })
+    return updatedComplaint
+  }
+
+  async delete(id: string): Promise<void> {
+    await prisma.complaint.delete({
+      where: { id },
+    })
   }
 }
 

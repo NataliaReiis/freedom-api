@@ -15,6 +15,7 @@ server.register(userRoutes, {
 server.register(postBlogRoutes, {
   prefix: '/post-blog',
 })
+
 server.listen(
   {
     port: 3000,

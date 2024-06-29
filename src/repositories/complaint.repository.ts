@@ -13,11 +13,11 @@ class ComplaintRepositoryPrisma implements ComplaintRepository {
     const result = await prisma.complaint.create({
       data: {
         userId: data.userId,
+        locationId: data.locationId,
         description: data.description,
         typeComplaint: data.typeComplaint as TypeComplaint,
         nivelComplaint: data.nivelComplaint as NivelComplaint,
         imageComplaint: data.imageComplaint,
-        locationId: data.locationId,
       },
       include: {
         location: true,
@@ -49,13 +49,17 @@ class ComplaintRepositoryPrisma implements ComplaintRepository {
     })
   }
 
-  async update(
-    id: string,
-    data: Partial<UpdatedComplaint>
-  ): Promise<Complaint> {
+  async update(id: string, data: UpdatedComplaint): Promise<Complaint> {
     const updatedComplaint = await prisma.complaint.update({
       where: { id },
-      data,
+      data: {
+        userId: data.userId,
+        locationId: data.locationId,
+        description: data.description,
+        typeComplaint: data.typeComplaint as TypeComplaint,
+        nivelComplaint: data.nivelComplaint as NivelComplaint,
+        imageComplaint: data.imageComplaint,
+      },
       include: {
         location: true,
         user: true,

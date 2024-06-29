@@ -1,4 +1,4 @@
-//Operações com banco de dados vem aqui
+//Operations in database here
 
 import { prisma } from '../database/prisma-client'
 import { User, UserRepository, UserCreate } from '../interfaces/user.interface'

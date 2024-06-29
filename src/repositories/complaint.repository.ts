@@ -31,6 +31,10 @@ class ComplaintRepositoryPrisma implements ComplaintRepository {
   async findById(id: string): Promise<Complaint | null> {
     const complaint = await prisma.complaint.findUnique({
       where: { id },
+      include: {
+        location: true,
+        user: true,
+      },
     })
 
     return complaint

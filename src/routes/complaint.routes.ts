@@ -57,4 +57,15 @@ export async function complaintRoutes(fastify: FastifyInstance) {
       }
     }
   )
+
+  fastify.delete('/:id', async (req, reply) => {
+    try {
+      const { id } = req.params as { id: string }
+      await complaintUseCase.delete(id)
+      reply.status(200).send({ message: 'Complaint deleted' })
+    } catch (error) {
+      console.error(error)
+      return reply.status(500).send({ message: 'Internal server error' })
+    }
+  })
 }

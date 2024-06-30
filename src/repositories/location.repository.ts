@@ -14,6 +14,10 @@ class LocationRepositoryPrisma implements LocationRepository {
     })
     return result
   }
+
+  async findAll(): Promise<Location[]> {
+    return await prisma.location.findMany()
+  }
 }
 
 export { LocationRepositoryPrisma }

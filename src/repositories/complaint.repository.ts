@@ -48,6 +48,25 @@ class ComplaintRepositoryPrisma implements ComplaintRepository {
       },
     })
   }
+
+  async update(id: string, data: UpdatedComplaint): Promise<Complaint> {
+    const updatedComplaint = await prisma.complaint.update({
+      where: { id },
+      data: {
+        userId: data.userId,
+        locationId: data.locationId,
+        description: data.description,
+        typeComplaint: data.typeComplaint as TypeComplaint,
+        nivelComplaint: data.nivelComplaint as NivelComplaint,
+        imageComplaint: data.imageComplaint,
+      },
+      include: {
+        location: true,
+        user: true,
+      },
+    })
+    return updatedComplaint
+  }
 }
 
 export { ComplaintRepositoryPrisma }

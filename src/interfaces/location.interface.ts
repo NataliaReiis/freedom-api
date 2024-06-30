@@ -7,10 +7,7 @@ export type LocationBase = {
 
 export type Location = Omit<LocationBase, 'id' | 'createdAt'>
 
-export type CreateLocation = Pick<
-  LocationBase,
-  'id' | 'createdAt' | 'latitude' | 'longitude'
->
+export type CreateLocation = Pick<LocationBase, 'latitude' | 'longitude'>
 
 export interface LocationRepository {
   create(data: CreateLocation): Promise<Location>

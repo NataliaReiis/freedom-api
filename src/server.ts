@@ -3,6 +3,8 @@ import cors from '@fastify/cors'
 import dotenv from 'dotenv'
 import { userRoutes } from './routes/user.routes'
 import { postBlogRoutes } from './routes/postBlog.routes'
+import { ComplaintRepositoryPrisma } from './repositories/complaint.repository'
+import { complaintRoutes } from './routes/complaint.routes'
 
 dotenv.config()
 
@@ -14,6 +16,10 @@ server.register(userRoutes, {
 
 server.register(postBlogRoutes, {
   prefix: '/post-blog',
+})
+
+server.register(complaintRoutes, {
+  prefix: '/complaint',
 })
 
 server.listen(

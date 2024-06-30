@@ -35,7 +35,7 @@ export async function postBlogRoutes(fastify: FastifyInstance) {
   })
 
   fastify.put<{ Params: { id: string }; Body: Partial<PostBlogUpdated> }>(
-    ':id',
+    '/:id',
     async (req, reply) => {
       try {
         const { id } = req.params

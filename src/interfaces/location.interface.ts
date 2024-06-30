@@ -1,20 +1,19 @@
-export type Location = {
+export type LocationBase = {
   id: string
   latitude: number
   longitude: number
   createdAt: Date
 }
 
-export type CreateLocation = {
-  latitude: number
-  longitude: number
-}
+export type Location = Omit<LocationBase, 'id' | 'createdAt'>
 
-export type UpdatedLocation = {
-  latitude?: number
-  longitude?: number
-}
+export type CreateLocation = Pick<
+  LocationBase,
+  'id' | 'createdAt' | 'latitude' | 'longitude'
+>
 
 export interface LocationRepository {
   create(data: CreateLocation): Promise<Location>
+  findAll(): Promise<Location[]>
+  findById(id: string): Promise<Location | null>
 }

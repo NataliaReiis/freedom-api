@@ -5,6 +5,7 @@ import { userRoutes } from './routes/user.routes'
 import { postBlogRoutes } from './routes/postBlog.routes'
 import { ComplaintRepositoryPrisma } from './repositories/complaint.repository'
 import { complaintRoutes } from './routes/complaint.routes'
+import { locationRoutes } from './routes/location.routes'
 
 dotenv.config()
 
@@ -20,6 +21,10 @@ server.register(postBlogRoutes, {
 
 server.register(complaintRoutes, {
   prefix: '/complaint',
+})
+
+server.register(locationRoutes, {
+  prefix: '/location',
 })
 
 server.listen(

@@ -32,4 +32,14 @@ export async function complaintRoutes(fastify: FastifyInstance) {
       return reply.status(500).send({ message: 'Internal server error' })
     }
   })
+
+  fastify.get('/', async (req, replay) => {
+    try {
+      const complaint = await complaintUseCase.getAll()
+      return replay.send(complaint)
+    } catch (error) {
+      console.error(error)
+      return replay.status(500).send({ message: 'Internal server error' })
+    }
+  })
 }

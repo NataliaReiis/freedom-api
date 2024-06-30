@@ -25,6 +25,14 @@ class LocationUseCase {
     })
     return result
   }
+
+  async getAll(): Promise<Location[]> {
+    return await this.locationRepository.findAll()
+  }
+
+  async getId(id: string): Promise<Location | null> {
+    return await this.locationRepository.findById(id)
+  }
 }
 
 export { LocationUseCase }

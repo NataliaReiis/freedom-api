@@ -18,6 +18,12 @@ class LocationRepositoryPrisma implements LocationRepository {
   async findAll(): Promise<Location[]> {
     return await prisma.location.findMany()
   }
+  async findById(id: string): Promise<Location | null> {
+    const complaint = await prisma.location.findUnique({
+      where: { id },
+    })
+    return complaint
+  }
 }
 
 export { LocationRepositoryPrisma }

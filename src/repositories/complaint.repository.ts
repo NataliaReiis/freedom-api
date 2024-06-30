@@ -67,6 +67,12 @@ class ComplaintRepositoryPrisma implements ComplaintRepository {
     })
     return updatedComplaint
   }
+
+  async delete(id: string): Promise<void> {
+    await prisma.complaint.delete({
+      where: { id },
+    })
+  }
 }
 
 export { ComplaintRepositoryPrisma }

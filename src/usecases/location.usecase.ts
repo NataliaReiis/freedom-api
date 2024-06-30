@@ -11,15 +11,8 @@ class LocationUseCase {
     this.locationRepository = new LocationRepositoryPrisma()
   }
 
-  async create({
-    id,
-    createdAt,
-    latitude,
-    longitude,
-  }: CreateLocation): Promise<Location> {
+  async create({ latitude, longitude }: CreateLocation): Promise<Location> {
     const result = await this.locationRepository.create({
-      id,
-      createdAt,
       latitude,
       longitude,
     })

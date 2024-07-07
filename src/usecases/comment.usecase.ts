@@ -43,3 +43,5 @@ class CommentUseCase {
     await this.commentRepository.delete(id)
   }
 }
+
+export { CommentUseCase }

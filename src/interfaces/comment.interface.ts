@@ -1,19 +1,17 @@
-import { PostBlog } from "@prisma/client"
-import { User } from "./user.interface"
+import { PostBlog } from '@prisma/client'
+import { User } from './user.interface'
 
 export type CommentBase = {
   id: string
   description: string
   imageComment: string
-  createdAt: Date
-  updatedAt: Date
-  user: User
+  user?: User
   userId: string
-  postBlog: PostBlog
+  postBlog?: PostBlog
   postBlogId: string
 }
 
-export type Comment = Omit<CommentBase, 'id'>
+export type Comment = Omit<CommentBase, 'id'> & { id: string }
 
 export type CreateComment = Pick<
   CommentBase,

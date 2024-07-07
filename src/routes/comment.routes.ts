@@ -30,7 +30,7 @@ export async function commentRoutes(fastify: FastifyInstance) {
   })
 
   fastify.put<{ Params: { id: string }; Body: UpdatedComment }>(
-    '/',
+    '/:id',
     async (req, reply) => {
       try {
         const { id } = req.params

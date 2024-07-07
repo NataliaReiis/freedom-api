@@ -1,11 +1,10 @@
 import fastify, { FastifyInstance } from 'fastify'
-import cors from '@fastify/cors'
 import dotenv from 'dotenv'
 import { userRoutes } from './routes/user.routes'
 import { postBlogRoutes } from './routes/postBlog.routes'
-import { ComplaintRepositoryPrisma } from './repositories/complaint.repository'
 import { complaintRoutes } from './routes/complaint.routes'
 import { locationRoutes } from './routes/location.routes'
+import { commentRoutes } from './routes/comment.routes'
 
 dotenv.config()
 
@@ -25,6 +24,10 @@ server.register(complaintRoutes, {
 
 server.register(locationRoutes, {
   prefix: '/location',
+})
+
+server.register(commentRoutes, {
+  prefix: '/comment',
 })
 
 server.listen(

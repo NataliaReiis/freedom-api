@@ -1,20 +1,26 @@
+import { PostBlog } from "@prisma/client"
+import { User } from "./user.interface"
+
 export type CommentBase = {
   id: string
   description: string
   imageComment: string
   createdAt: Date
   updatedAt: Date
+  user: User
   userId: string
+  postBlog: PostBlog
+  postBlogId: string
 }
 
-export type Comment = Omit<CommentBase, 'userId'>
+export type Comment = Omit<CommentBase, 'id'>
 
 export type CreateComment = Pick<
   CommentBase,
-  'description' | 'imageComment' | 'userId'
+  'description' | 'imageComment' | 'userId' | 'postBlogId' | 'userId'
 >
 
-export type UpdatedComment = Partial<CommentBase>
+export type UpdatedComment = Partial<CommentBase> & { updatedAt?: Date }
 
 export interface CommentRepository {
   create(data: CreateComment): Promise<Comment>

@@ -1,32 +1,37 @@
 import fastify, { FastifyInstance } from 'fastify'
 import dotenv from 'dotenv'
-import { userRoutes } from './routes/user.routes'
-import { postBlogRoutes } from './routes/postBlog.routes'
-import { complaintRoutes } from './routes/complaint.routes'
-import { locationRoutes } from './routes/location.routes'
-import { commentRoutes } from './routes/comment.routes'
+import { userRoute } from './routes/user.route'
+import { postBlogRoute } from './routes/postBlog.route'
+import { complaintRoute } from './routes/complaint.route'
+import { locationRoute } from './routes/location.route'
+import { commentRoute } from './routes/comment.route'
+import { auth } from './routes/auth.route'
 
 dotenv.config()
 
 const server: FastifyInstance = fastify({ logger: true })
 
-server.register(userRoutes, {
+server.register(userRoute, {
   prefix: '/users',
 })
 
-server.register(postBlogRoutes, {
+server.register(auth, {
+  prefix: '/autentication',
+})
+
+server.register(postBlogRoute, {
   prefix: '/post-blog',
 })
 
-server.register(complaintRoutes, {
+server.register(complaintRoute, {
   prefix: '/complaint',
 })
 
-server.register(locationRoutes, {
+server.register(locationRoute, {
   prefix: '/location',
 })
 
-server.register(commentRoutes, {
+server.register(commentRoute, {
   prefix: '/comment',
 })
 

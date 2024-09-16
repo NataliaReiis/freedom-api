@@ -54,6 +54,10 @@ class UserUseCase {
     return await this.userRepository.findAll()
   }
 
+  async findByEmail(email: string) {
+    return await this.userRepository.findByEmail(email)
+  }
+
   async update(id: string, data: Partial<UpdatedUser>): Promise<User> {
     const userExists = await this.userRepository.findById(id)
     if (!userExists) {

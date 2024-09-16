@@ -1,9 +1,14 @@
 import fastify, { FastifyInstance } from 'fastify'
 import { UserUseCase } from '../usecases/user.usecase'
 import { UpdatedUser, UserCreate } from '../interfaces/user.interface'
+import bcrypt from 'bcryptjs'
 
 export async function userRoutes(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase()
+
+  async function generateHash(password: string) {
+    return bcrypt.hash(password, 10)
+  }
 
   fastify.post<{ Body: UserCreate }>('/', async (req, reply) => {
     const { name, email, password, tel, ...rest } = req.body
@@ -11,7 +16,7 @@ export async function userRoutes(fastify: FastifyInstance) {
       const data = await userUseCase.create({
         name,
         email,
-        password,
+        password: await generateHash(password),
         tel,
         ...rest,
       })

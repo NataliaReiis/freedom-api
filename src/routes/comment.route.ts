@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { CommentUseCase } from '../usecases/comment.usecase'
 import { CreateComment, UpdatedComment } from '../interfaces/comment.interface'
 
-export async function commentRoutes(fastify: FastifyInstance) {
+export async function commentRoute(fastify: FastifyInstance) {
   const commentUseCase = new CommentUseCase()
 
   fastify.post<{ Body: CreateComment }>('/', async (req, reply) => {

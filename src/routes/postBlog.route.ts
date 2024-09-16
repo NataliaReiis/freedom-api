@@ -5,7 +5,7 @@ import {
   PostBlogUpdated,
 } from '../interfaces/post-blog.interface'
 
-export async function postBlogRoutes(fastify: FastifyInstance) {
+export async function postBlogRoute(fastify: FastifyInstance) {
   const postBlogUseCase = new PostBlogUseCase()
 
   fastify.post<{ Body: PostBlogCreate }>('/', async (req, reply) => {

@@ -5,7 +5,7 @@ import {
   UpdatedComplaint,
 } from '../interfaces/complaint.interface'
 
-export async function complaintRoutes(fastify: FastifyInstance) {
+export async function complaintRoute(fastify: FastifyInstance) {
   const complaintUseCase = new UseCaseComplaint()
 
   fastify.post<{ Body: CreateComplaint }>('/', async (req, reply) => {

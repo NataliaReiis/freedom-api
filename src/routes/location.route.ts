@@ -6,7 +6,7 @@ import {
 } from '../interfaces/post-blog.interface'
 import { CreateLocation } from '../interfaces/location.interface'
 
-export async function locationRoutes(fastify: FastifyInstance) {
+export async function locationRoute(fastify: FastifyInstance) {
   const locationUseCase = new LocationUseCase()
 
   fastify.post<{ Body: CreateLocation }>('/', async (req, reply) => {

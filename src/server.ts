@@ -13,11 +13,10 @@ dotenv.config()
 const server: FastifyInstance = fastify({ logger: true })
 
 server.addHook('onRequest', async (req, reply) => {
-  if (req.routerPath === '/users' && req.routerMethod === 'POST') {
-    return
-  }
-
-  if (req.routerPath === '/autentication' && req.routerMethod === 'POST') {
+  if (
+    (req.routerPath === '/users' || req.routerPath === '/autentication') &&
+    req.routerMethod === 'POST'
+  ) {
     return
   }
 

@@ -6,10 +6,23 @@ import { complaintRoute } from './routes/complaint.route'
 import { locationRoute } from './routes/location.route'
 import { commentRoute } from './routes/comment.route'
 import { auth } from './routes/auth.route'
+import authMiddleware from './middlewares/authorization'
 
 dotenv.config()
 
 const server: FastifyInstance = fastify({ logger: true })
+
+server.addHook('onRequest', async (req, reply) => {
+  if (req.routerPath === '/users' && req.routerMethod === 'POST') {
+    return
+  }
+
+  if (req.routerPath === '/autentication' && req.routerMethod === 'POST') {
+    return
+  }
+
+  await authMiddleware(req, reply)
+})
 
 server.register(userRoute, {
   prefix: '/users',

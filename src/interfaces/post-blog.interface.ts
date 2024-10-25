@@ -1,5 +1,3 @@
-import { Comment } from './comment.interface'
-
 export type CreatePostBlogDto = {
   description: string
   imagePost: string

@@ -1,21 +1,18 @@
-import {
-  Complaint,
-  ComplaintRepository,
-  CreateComplaint,
-  UpdatedComplaint,
-} from '../interfaces/complaint.interface'
+import { Complaint } from '@prisma/client'
 import { ComplaintRepositoryPrisma } from '../repositories/complaint.repository'
+import {
+  CreateComplaintDto,
+  UpdateComplaintDto,
+} from '../interfaces/complaint.interface'
 
 class UseCaseComplaint {
-  private complaintRepository: ComplaintRepository
+  private complaintRepository: ComplaintRepositoryPrisma
   constructor() {
     this.complaintRepository = new ComplaintRepositoryPrisma()
   }
 
-  async create(data: CreateComplaint): Promise<Complaint> {
-    const result = await this.complaintRepository.create(data)
-
-    return result
+  async create(data: CreateComplaintDto): Promise<Complaint> {
+    return await this.complaintRepository.create(data)
   }
 
   async getAll(): Promise<Complaint[]> {
@@ -26,13 +23,16 @@ class UseCaseComplaint {
     return await this.complaintRepository.findById(id)
   }
 
-  async update(id: string, data: UpdatedComplaint): Promise<Complaint | null> {
+  async update(
+    id: string,
+    data: UpdateComplaintDto
+  ): Promise<Complaint | null> {
     const complaintExists = await this.complaintRepository.findById(id)
     if (!complaintExists) {
       throw new Error('Complaint not found')
     }
-    const updatedComplaint = await this.complaintRepository.update(id, data)
-    return updatedComplaint
+    const UpdateComplaintDto = await this.complaintRepository.update(id, data)
+    return UpdateComplaintDto
   }
 
   async delete(id: string): Promise<void> {

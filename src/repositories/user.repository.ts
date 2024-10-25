@@ -1,51 +1,49 @@
 //Operations in database here
 
+import { User } from '@prisma/client'
 import { prisma } from '../database/prisma-client'
-import { User, UserRepository, UserCreate } from '../interfaces/user.interface'
+import { CreateUserDto, updateUserDto } from '../interfaces/user.interface'
 
-class UserRepositoryPrisma implements UserRepository {
-  async create(data: UserCreate): Promise<User> {
-    const result = await prisma.user.create({
-      data: {
-        ...data,
-      },
-    })
-    return result
-  }
-  async findByEmail(email: string): Promise<User | null> {
-    const result = await prisma.user.findFirst({
-      where: {
-        email,
-      },
-    })
-    return result || null
-  }
+export interface IUserRepository {
+  findAll: () => Promise<User[]>
+  findById: (id: string) => Promise<User | null>
+  findByEmail: (email: string) => Promise<User | null>
+  create: (data: CreateUserDto) => Promise<User>
+  update: (id: string, updateUserDto: updateUserDto) => Promise<User>
+  delete: (id: string) => void
+}
 
-  async findAll(): Promise<User[]> {
+export default class UserRepositoryPrisma implements IUserRepository {
+  async findAll() {
     return await prisma.user.findMany()
   }
 
-  async findById(id: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({
+  async findById(id: string) {
+    return await prisma.user.findUnique({
       where: { id },
     })
-    //n precisa do null
-    return user || null
   }
 
-  async update(id: string, data: Partial<UserCreate>): Promise<User> {
-    const updatedUser = await prisma.user.update({
-      where: { id },
-      data,
+  async findByEmail(email: string) {
+    return await prisma.user.findUnique({
+      where: { email },
     })
-    return updatedUser
   }
 
-  async delete(id: string): Promise<void> {
-    await prisma.user.delete({
+  async create(dto: CreateUserDto) {
+    return await prisma.user.create({ data: dto })
+  }
+
+  async update(id: string, dto: updateUserDto) {
+    return await prisma.user.update({
+      where: { id },
+      data: dto,
+    })
+  }
+
+  async delete(id: string) {
+    return await prisma.user.delete({
       where: { id },
     })
   }
 }
-
-export { UserRepositoryPrisma }

@@ -1,70 +1,45 @@
 // Aqui vai toda a logica, regras de negocios e afins.
 // Também poderia ser o arquivo de controllers
 
-import {
-  UpdatedUser,
-  User,
-  UserCreate,
-  UserRepository,
-} from '../interfaces/user.interface'
-import { UserRepositoryPrisma } from '../repositories/user.repository'
+import { User } from '@prisma/client'
+import { CreateUserDto, updateUserDto } from '../interfaces/user.interface'
+import UserRepositoryPrisma from '../repositories/user.repository'
 
 class UserUseCase {
-  private userRepository: UserRepository
+  private userRepository: UserRepositoryPrisma
   constructor() {
     this.userRepository = new UserRepositoryPrisma()
   }
 
-  async create({
-    name,
-    email,
-    age,
-    cpf,
-    imageDoc,
-    imageDocSelf,
-    imageSelf,
-    marital_status,
-    password,
-    sex,
-    tel,
-  }: UserCreate): Promise<User> {
-    const verifyIfUserExists = await this.userRepository.findByEmail(email)
+  async getAll(): Promise<User[]> {
+    return this.userRepository.findAll()
+  }
+
+  async getById(id: string): Promise<User | null> {
+    return await this.userRepository.findById(id)
+  }
+
+  async getByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findByEmail(email)
+  }
+
+  async create(data: CreateUserDto): Promise<User> {
+    const verifyIfUserExists = await this.userRepository.findByEmail(data.email)
+
     if (verifyIfUserExists) {
       Error('User already exists')
     }
 
-    const result = await this.userRepository.create({
-      name,
-      email,
-      age,
-      cpf,
-      imageDoc,
-      imageDocSelf,
-      imageSelf,
-      marital_status,
-      password,
-      sex,
-      tel,
-    })
-    console.log(result)
-    return result
+    return await this.userRepository.create(data)
   }
 
-  async getAll(): Promise<User[]> {
-    return await this.userRepository.findAll()
-  }
-
-  async findByEmail(email: string) {
-    return await this.userRepository.findByEmail(email)
-  }
-
-  async update(id: string, data: Partial<UpdatedUser>): Promise<User> {
+  async update(id: string, data: Partial<updateUserDto>) {
     const userExists = await this.userRepository.findById(id)
+
     if (!userExists) {
       throw new Error('User not found')
     }
-    const updatedUser = await this.userRepository.update(id, data)
-    return updatedUser
+    return await this.userRepository.update(id, data)
   }
 
   async delete(id: string): Promise<void> {

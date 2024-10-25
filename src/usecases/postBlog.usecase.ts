@@ -1,13 +1,9 @@
-import {
-  PostBlog,
-  PostBlogCreate,
-  PostBlogUpdated,
-  PostBlogRepository,
-} from '../interfaces/post-blog.interface'
+import { PostBlog } from '@prisma/client'
+import { CreatePostBlogDto } from '../interfaces/post-blog.interface'
 import { PostBlogRepositoryPrisma } from '../repositories/post-blog.respository'
 
 class PostBlogUseCase {
-  private postBlogRepository: PostBlogRepository
+  private postBlogRepository: PostBlogRepositoryPrisma
   constructor() {
     this.postBlogRepository = new PostBlogRepositoryPrisma()
   }
@@ -16,7 +12,7 @@ class PostBlogUseCase {
     description,
     imagePost,
     userId,
-  }: PostBlogCreate): Promise<PostBlog> {
+  }: CreatePostBlogDto): Promise<PostBlog> {
     const result = await this.postBlogRepository.create({
       description,
       imagePost,

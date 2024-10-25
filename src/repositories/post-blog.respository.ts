@@ -1,23 +1,19 @@
+import { PostBlog } from '@prisma/client'
 import { prisma } from '../database/prisma-client'
 import {
-  PostBlog,
-  PostBlogCreate,
-  PostBlogRepository,
-  PostBlogUpdated,
+  CreatePostBlogDto,
+  UpdatePostBlogDto,
 } from '../interfaces/post-blog.interface'
 
-class PostBlogRepositoryPrisma implements PostBlogRepository {
-  async create(data: PostBlogCreate): Promise<PostBlog> {
-    const newPostBlog = await prisma.postBlog.create({
-      data: {
-        description: data.description,
-        imagePost: data.imagePost,
-        userId: data.userId,
-      },
-    })
-    return newPostBlog
-  }
+export interface IPostBlogRepository {
+  findAll(): Promise<PostBlog[]>
+  findById: (id: string) => Promise<PostBlog | null>
+  create: (dto: CreatePostBlogDto) => Promise<PostBlog>
+  update(id: string, dto: UpdatePostBlogDto): Promise<PostBlog>
+  delete(id: string): Promise<PostBlog>
+}
 
+export class PostBlogRepositoryPrisma implements IPostBlogRepository {
   async findAll(): Promise<PostBlog[]> {
     return await prisma.postBlog.findMany({
       include: {
@@ -27,27 +23,25 @@ class PostBlogRepositoryPrisma implements PostBlogRepository {
     })
   }
 
-  async findById(id: string): Promise<PostBlog | null> {
-    const postBlog = await prisma.postBlog.findUnique({
+  async findById(id: string) {
+    return await prisma.postBlog.findUnique({
       where: { id },
     })
-    return postBlog
+  }
+  async create(dto: CreatePostBlogDto) {
+    return await prisma.postBlog.create({ data: dto })
   }
 
-  async update(id: string, data: Partial<PostBlogUpdated>): Promise<PostBlog> {
-    const updatedPostBlog = await prisma.postBlog.update({
+  async update(id: string, dto: UpdatePostBlogDto) {
+    return await prisma.postBlog.update({
       where: { id },
-      data,
+      data: dto,
     })
-    return updatedPostBlog
   }
 
-  async delete(id: string): Promise<PostBlog> {
-    const deletedPostBlog = await prisma.postBlog.delete({
+  async delete(id: string) {
+    return await prisma.postBlog.delete({
       where: { id },
     })
-    return deletedPostBlog
   }
 }
-
-export { PostBlogRepositoryPrisma }

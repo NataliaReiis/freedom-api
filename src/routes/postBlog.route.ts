@@ -5,6 +5,13 @@ import {
   PostBlogUpdated,
 } from '../interfaces/post-blog.interface'
 
+export interface PostBlogRepository {
+  create(data: PostBlogCreate): Promise<PostBlog>
+  findAll(): Promise<PostBlog[]>
+  findById(id: string): Promise<PostBlog | null>
+  update(id: string, data: Partial<PostBlogUpdated>): Promise<PostBlog>
+  delete(id: string): Promise<PostBlog>
+}
 export async function postBlogRoute(fastify: FastifyInstance) {
   const postBlogUseCase = new PostBlogUseCase()
 

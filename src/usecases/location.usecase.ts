@@ -1,26 +1,19 @@
-import {
-  CreateLocation,
-  Location,
-  LocationRepository,
-} from '../interfaces/location.interface'
+import { Location } from '@prisma/client'
+import { CreateLocationDto } from '../interfaces/location.interface'
 import { LocationRepositoryPrisma } from '../repositories/location.repository'
 
 class LocationUseCase {
-  private locationRepository: LocationRepository
+  private locationRepository: LocationRepositoryPrisma
   constructor() {
     this.locationRepository = new LocationRepositoryPrisma()
   }
 
-  async create({ latitude, longitude }: CreateLocation): Promise<Location> {
-    const result = await this.locationRepository.create({
-      latitude,
-      longitude,
-    })
-    return result
+  async create(data: CreateLocationDto): Promise<Location> {
+    return await this.locationRepository.create(data)
   }
 
   async getAll(): Promise<Location[]> {
-    return await this.locationRepository.findAll()
+    return await this.locationRepository.find()
   }
 
   async getId(id: string): Promise<Location | null> {

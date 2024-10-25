@@ -1,19 +1,17 @@
-import { error } from 'console'
+import { Comment } from '@prisma/client'
 import {
-  Comment,
-  CommentRepository,
-  CreateComment,
-  UpdatedComment,
+  CreateCommentDto,
+  UpdatedCommentDto,
 } from '../interfaces/comment.interface'
-import { CommentRepositoryPrisma } from '../repositories/comment.repository'
+import CommentRepositoryPrisma from '../repositories/comment.repository'
 
 class CommentUseCase {
-  private commentRepository: CommentRepository
+  private commentRepository: CommentRepositoryPrisma
   constructor() {
     this.commentRepository = new CommentRepositoryPrisma()
   }
 
-  async create(data: CreateComment): Promise<Comment> {
+  async create(data: CreateCommentDto): Promise<Comment> {
     const result = await this.commentRepository.create(data)
 
     return result
@@ -27,13 +25,13 @@ class CommentUseCase {
     return await this.commentRepository.findById(id)
   }
 
-  async update(id: string, data: UpdatedComment): Promise<Comment | null> {
+  async update(id: string, data: UpdatedCommentDto): Promise<Comment | null> {
     const commmentExists = await this.commentRepository.findById(id)
     if (!commmentExists) {
       throw new Error('Comment not found')
     }
-    const updatedComment = await this.commentRepository.update(id, data)
-    return updatedComment
+    const UpdatedCommentDto = await this.commentRepository.update(id, data)
+    return UpdatedCommentDto
   }
   async delete(id: string): Promise<void> {
     const commentExists = await this.commentRepository.findById(id)

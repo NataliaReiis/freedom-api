@@ -16,23 +16,27 @@ datasource db {
 model User {
   id             String      @id @default(uuid())
   email          String      @unique
-  name           String
   password       String
-  tel            String?
-  marital_status String
-  cpf            String
-  age            Int
-  sex            String
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
-  imageDoc       String
-  imageSelf      String
-  imageDocSelf   String
+  profileID      String      @unique
+  profile        Profile     @relation(fields: [profileID], references: [id])
   comments       Comment[]
   Complaint      Complaint[]
   postBlog       PostBlog[]
 
   @@map("users")
+}
+
+model Profile {
+  id String @id @default(uuid())
+  name           String
+  tel            String?
+  age            Int
+  sex            String
+  cpf            String
+  marital_status String
+  user User?
 }
 
 model Complaint {

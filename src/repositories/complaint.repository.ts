@@ -1,5 +1,4 @@
 import { prisma } from '../database/prisma-client'
-import { UpdatedComment } from '../interfaces/comment.interface'
 import {
   CreateComplaintDto,
   UpdateComplaintDto,

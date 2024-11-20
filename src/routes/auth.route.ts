@@ -15,7 +15,7 @@ export async function auth(fastify: FastifyInstance) {
 
   fastify.post<{ Body: Auth }>('/', async (req, reply) => {
     const { email, password } = req.body
-    const user = await userUseCase.findByEmail(email)
+    const user = await userUseCase.getByEmail(email)
     const jwt_secret = process.env.JWT_SECRET
 
     if (!user || !password) {

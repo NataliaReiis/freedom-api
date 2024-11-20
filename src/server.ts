@@ -14,7 +14,7 @@ const server: FastifyInstance = fastify({ logger: true })
 
 server.addHook('onRequest', async (req, reply) => {
   if (
-    (req.routerPath === '/users' || req.routerPath === '/autentication') &&
+    (req.routerPath === '/users' || req.routerPath === '/auth') &&
     req.routerMethod === 'POST'
   ) {
     return
@@ -28,7 +28,7 @@ server.register(userRoute, {
 })
 
 server.register(auth, {
-  prefix: '/autentication',
+  prefix: '/auth',
 })
 
 server.register(postBlogRoute, {

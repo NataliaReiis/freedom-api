@@ -5,4 +5,4 @@ export type CreateCommentDto = {
   postBlogId: string
 }
 
-export type UpdatedComment = Partial<CreateCommentDto>
+export type UpdatedCommentDto = Partial<CreateCommentDto>

@@ -7,6 +7,7 @@ import { locationRoute } from './routes/location.route'
 import { commentRoute } from './routes/comment.route'
 import { auth } from './routes/auth.route'
 import authMiddleware from './middlewares/authorization'
+import { profileRouter } from './routes/profile.route'
 
 dotenv.config()
 
@@ -20,11 +21,18 @@ server.addHook('onRequest', async (req, reply) => {
     return
   }
 
+  if (req.routerPath === '/profile' && req.routerMethod === 'POST') {
+    return
+  }
   await authMiddleware(req, reply)
 })
 
 server.register(userRoute, {
   prefix: '/users',
+})
+
+server.register(profileRouter, {
+  prefix: '/profile',
 })
 
 server.register(auth, {

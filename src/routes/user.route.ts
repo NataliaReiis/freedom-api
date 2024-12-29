@@ -1,4 +1,4 @@
-import fastify, { FastifyInstance } from 'fastify'
+import { FastifyInstance } from 'fastify'
 import { UserUseCase } from '../usecases/user.usecase'
 import generateHash from '../usecases/auth.usecase'
 import { CreateUserDto, updateUserDto } from '../interfaces/user.interface'
@@ -8,13 +8,12 @@ export async function userRoute(fastify: FastifyInstance) {
 
   fastify.post<{ Body: CreateUserDto }>('/', async (req, reply) => {
     try {
-      const { name, email, password, tel, ...rest } = req.body
+      const { email, password, ...rest } = req.body
 
       const data = await userUseCase.create({
-        name,
         email,
         password: await generateHash(password),
-        tel,
+
         ...rest,
       })
 
@@ -52,10 +51,15 @@ export async function userRoute(fastify: FastifyInstance) {
         const { id } = req.query
         const data = req.body
 
+        const verifyUser = await userUseCase.getById(id)
+        if (!verifyUser) {
+          return reply.status(404).send({ message: 'profile not found' })
+        }
+
         const updatedUser = await userUseCase.update(id, data)
 
         if (!updatedUser) {
-          return reply.status(404).send({ message: 'User not found' }) // Retorna 404 se o usuário não for encontrado
+          return reply.status(404).send({ message: 'Error ' })
         }
 
         return reply.send(updatedUser)

@@ -1,16 +1,10 @@
-export type CreateUserDto = {
+export type User = {
+  id: string
   email: string
-  name: string
   password: string
-  tel: string | null
-  marital_status: string
-  cpf: string
-  age: number
-  sex: string
-  imageDoc: string
-  imageSelf: string
-  imageDocSelf: string
 }
+
+export type CreateUserDto = Omit<User, 'id'>
 
 export type updateUserDto = Partial<CreateUserDto>
 

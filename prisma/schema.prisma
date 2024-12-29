@@ -18,9 +18,8 @@ model User {
   email          String      @unique
   password       String
   createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
-  profileID      String      @unique
-  profile        Profile     @relation(fields: [profileID], references: [id])
+  updatedAt      DateTime    @updatedAt 
+  profile        Profile?     
   comments       Comment[]
   Complaint      Complaint[]
   postBlog       PostBlog[]
@@ -29,14 +28,15 @@ model User {
 }
 
 model Profile {
-  id String @id @default(uuid())
+  id             String @id @default(uuid())
   name           String
   tel            String?
   age            Int
   sex            String
   cpf            String
   marital_status String
-  user User?
+  userID         String  @unique
+  user           User    @relation(fields: [userID], references: [id])
 }
 
 model Complaint {

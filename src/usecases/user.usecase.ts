@@ -6,7 +6,8 @@ import { CreateUserDto, updateUserDto } from '../interfaces/user.interface'
 import UserRepositoryPrisma from '../repositories/user.repository'
 
 class UserUseCase {
-  private userRepository: UserRepositoryPrisma
+  readonly userRepository: UserRepositoryPrisma
+
   constructor() {
     this.userRepository = new UserRepositoryPrisma()
   }

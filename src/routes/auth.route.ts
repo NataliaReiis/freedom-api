@@ -26,15 +26,18 @@ export async function auth(fastify: FastifyInstance) {
       return reply.send(
         'JWT_SECRET não está definido nas variáveis de ambiente'
       )
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return reply.status(400).send({ error: 'Formato de email invalido' })
+    }
 
     try {
-      const passwordMatches = bcryptjs.compareSync(password, user.password)
+      const passwordMatches = await bcryptjs.compare(password, user.password)
 
       if (passwordMatches) {
         const token = jwt.sign({ id: user.id, email: user.email }, jwt_secret, {
           expiresIn: '1h',
         })
-        console.log(token)
+
         reply.send({ email, token })
       } else {
         return reply.status(400).send('Credencias invalidas')

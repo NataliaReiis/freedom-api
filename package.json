@@ -8,19 +8,19 @@
     "dev": "tsx watch ./src/server.ts"
   },
   "dependencies": {
-    "@fastify/cors": "^9.0.1",
-    "@prisma/client": "^5.15.0",
+    "@fastify/cors": "^10.0.1",
+    "@prisma/client": "^6.1.0",
+    "@types/node": "^22.10.2",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
-    "fastify": "^4.28.0",
-    "fastify-jwt": "^4.2.0",
+    "fastify": "^5.2.0",
+    "fastify-jwt": "^4.1.3",
     "jsonwebtoken": "^9.0.2",
-    "prisma": "^5.15.0"
+    "prisma": "^6.1.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.7",
-    "@types/node": "^20.14.2",
     "tsx": "^4.15.5",
     "typescript": "^5.4.5"
   }

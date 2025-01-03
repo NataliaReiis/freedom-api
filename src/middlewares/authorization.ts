@@ -12,8 +12,10 @@ export default async function authMiddleware(
 
   if (!jwt_secret)
     return reply.send('JWT_SECRET não está definido nas variáveis de ambiente')
+
   try {
     const auth = req.headers.authorization ?? ''
+
     if (!auth) {
       reply.status(401).send('Você não tem permissão para essa ação')
     }
@@ -24,6 +26,7 @@ export default async function authMiddleware(
       reply.status(401).send('Token não fornecido')
       return
     }
+
     jwt.verify(token, jwt_secret, (err, decoded) => {
       if (err) {
         reply.status(401).send('Token invalido ou expirado')

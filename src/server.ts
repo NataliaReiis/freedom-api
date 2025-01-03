@@ -15,13 +15,16 @@ const server: FastifyInstance = fastify({ logger: true })
 
 server.addHook('onRequest', async (req, reply) => {
   if (
-    (req.routerPath === '/users' || req.routerPath === '/auth') &&
-    req.routerMethod === 'POST'
+    (req.routeOptions.url === '/users' || req.routeOptions.url === '/auth') &&
+    req.routeOptions.method === 'POST'
   ) {
     return
   }
 
-  if (req.routerPath === '/profile' && req.routerMethod === 'POST') {
+  if (
+    req.routeOptions.url === '/profile' &&
+    req.routeOptions.method === 'POST'
+  ) {
     return
   }
   await authMiddleware(req, reply)

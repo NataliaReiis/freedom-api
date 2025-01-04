@@ -13,7 +13,6 @@ export async function userRoute(fastify: FastifyInstance) {
       const data = await userUseCase.create({
         email,
         password: await generateHash(password),
-
         ...rest,
       })
 

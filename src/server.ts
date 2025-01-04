@@ -15,7 +15,9 @@ const server: FastifyInstance = fastify({ logger: true })
 
 server.addHook('onRequest', async (req, reply) => {
   if (
-    (req.routeOptions.url === '/users' || req.routeOptions.url === '/auth') &&
+    (req.routeOptions.url === '/users' ||
+      req.routeOptions.url === '/auth' ||
+      req.routeOptions.url === '/auth/register') &&
     req.routeOptions.method === 'POST'
   ) {
     return
@@ -61,6 +63,7 @@ server.register(commentRoute, {
 server.listen(
   {
     port: 3000,
+    host: '0.0.0.0',
   },
   () => console.log('Server is running on port 3000')
 )

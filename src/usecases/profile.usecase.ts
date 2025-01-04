@@ -1,4 +1,5 @@
 import { CreateProfile, UpdateProfile } from '../interfaces/profile.interface'
+import { CreateUserDto } from '../interfaces/user.interface'
 import { ProfileRepositoryPrisma } from '../repositories/profile.repository'
 
 class ProfileUseCase {
@@ -18,6 +19,7 @@ class ProfileUseCase {
   async create(data: CreateProfile) {
     return this.profileRepository.create(data)
   }
+
   async update(id: string, data: UpdateProfile) {
     return this.profileRepository.update(id, data)
   }

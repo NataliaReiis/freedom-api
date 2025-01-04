@@ -31,10 +31,10 @@ model Profile {
   id             String @id @default(uuid())
   name           String
   tel            String?
-  age            Int
-  sex            String
+  age             Int
+  sex            String 
   cpf            String
-  marital_status String
+  marital_status String   
   userID         String  @unique
   user           User    @relation(fields: [userID], references: [id])
 }

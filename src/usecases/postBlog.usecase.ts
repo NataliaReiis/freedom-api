@@ -3,7 +3,8 @@ import { CreatePostBlogDto } from '../interfaces/post-blog.interface'
 import { PostBlogRepositoryPrisma } from '../repositories/post-blog.respository'
 
 class PostBlogUseCase {
-  private postBlogRepository: PostBlogRepositoryPrisma
+  private readonly postBlogRepository: PostBlogRepositoryPrisma
+
   constructor() {
     this.postBlogRepository = new PostBlogRepositoryPrisma()
   }
@@ -43,7 +44,7 @@ class PostBlogUseCase {
     if (!postExists) {
       throw new Error('Post not found')
     }
-    const deletePostBlog = await this.postBlogRepository.delete(id)
+    await this.postBlogRepository.delete(id)
   }
 }
 

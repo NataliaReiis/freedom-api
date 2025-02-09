@@ -6,7 +6,7 @@ import {
 import CommentRepositoryPrisma from '../repositories/comment.repository'
 
 class CommentUseCase {
-  private commentRepository: CommentRepositoryPrisma
+  private readonly commentRepository: CommentRepositoryPrisma
   constructor() {
     this.commentRepository = new CommentRepositoryPrisma()
   }

@@ -11,12 +11,20 @@ interface Auth {
   email: string
   password: string
 }
+
+interface AuthMeProps {
+  id: string
+}
+
+//to-do: implementar validação de dados enviados para cadastro de novo usuario com o ZOD
+
 export async function auth(fastify: FastifyInstance) {
   const userUseCase = new UserUseCase()
   const profileUseCase = new ProfileUseCase()
 
-  const jwt_secret = process.env.JWT_SECRET
   env.config()
+
+  const jwt_secret = process.env.JWT_SECRET
 
   fastify.post<{ Body: Auth }>('/', async (req, reply) => {
     const { email, password } = req.body
@@ -26,7 +34,7 @@ export async function auth(fastify: FastifyInstance) {
     if (!user || !password) {
       return reply.status(400).send('Credencias invalidas')
     }
-    const validateEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i
+    const validateEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i
 
     if (!validateEmail.test(email)) {
       return reply.status(400).send({ error: 'Formato de email inválido' })
@@ -53,6 +61,8 @@ export async function auth(fastify: FastifyInstance) {
       return reply.status(400).send('Credencias invalidas')
     }
   })
+
+  //to-do: implementar validação de dados enviados para cadastro de novo usuario com o ZOD
 
   fastify.post<{ Body: CreateProfileWithUser }>(
     '/register',

@@ -32,9 +32,9 @@ model Profile {
   name           String
   tel            String?
   age             Int
-  sex            String 
-  cpf            String
-  marital_status String   
+  sex            String? 
+  cpf            String  @unique
+  marital_status String?   
   userID         String  @unique
   user           User    @relation(fields: [userID], references: [id])
 }

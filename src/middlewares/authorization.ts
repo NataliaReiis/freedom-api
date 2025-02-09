@@ -14,17 +14,16 @@ export default async function authMiddleware(
     return reply.send('JWT_SECRET não está definido nas variáveis de ambiente')
 
   try {
-    const auth = req.headers.authorization ?? ''
+    const auth = req.headers.authorization
 
     if (!auth) {
-      reply.status(401).send('Você não tem permissão para essa ação')
+      return reply.status(401).send('Você não tem permissão para essa ação')
     }
 
     const token = auth.split(' ')[1]
 
     if (!token) {
-      reply.status(401).send('Token não fornecido')
-      return
+      return reply.status(401).send('Token não fornecido')
     }
 
     jwt.verify(token, jwt_secret, (err, decoded) => {

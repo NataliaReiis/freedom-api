@@ -2,7 +2,7 @@ import { Comment } from '@prisma/client'
 import { prisma } from '../database/prisma-client'
 import {
   CreateCommentDto,
-  UpdatedComment,
+  UpdatedCommentDto,
 } from '../interfaces/comment.interface'
 
 interface ICommentRepository {
@@ -11,7 +11,7 @@ interface ICommentRepository {
   findByUserId: (userId: string) => Promise<Comment[]>
   findByPostBlogId: (postBlogId: string) => Promise<Comment[]>
   create: (dto: CreateCommentDto) => Promise<Comment>
-  update: (id: string, dto: UpdatedComment) => Promise<Comment>
+  update: (id: string, dto: UpdatedCommentDto) => Promise<Comment>
   delete: (id: string) => Promise<void>
 }
 export default class CommentRepositoryPrisma implements ICommentRepository {
@@ -41,7 +41,7 @@ export default class CommentRepositoryPrisma implements ICommentRepository {
     return await prisma.comment.create({ data: dto })
   }
 
-  async update(id: string, dto: UpdatedComment) {
+  async update(id: string, dto: UpdatedCommentDto) {
     return await prisma.comment.update({
       where: { id },
       data: dto,

@@ -1,12 +1,16 @@
 import { FastifyInstance } from 'fastify'
 import { CommentUseCase } from '../usecases/comment.usecase'
-import { CreateComment, UpdatedComment } from '../interfaces/comment.interface'
+import {
+  CreateCommentDto,
+  UpdatedCommentDto,
+} from '../interfaces/comment.interface'
 
 export async function commentRoute(fastify: FastifyInstance) {
   const commentUseCase = new CommentUseCase()
 
-  fastify.post<{ Body: CreateComment }>('/', async (req, reply) => {
+  fastify.post<{ Body: CreateCommentDto }>('/', async (req, reply) => {
     const { description, imageComment, postBlogId, userId } = req.body
+
     try {
       const data = await commentUseCase.create({
         description,
@@ -29,7 +33,7 @@ export async function commentRoute(fastify: FastifyInstance) {
     }
   })
 
-  fastify.put<{ Params: { id: string }; Body: UpdatedComment }>(
+  fastify.put<{ Params: { id: string }; Body: UpdatedCommentDto }>(
     '/:id',
     async (req, reply) => {
       try {

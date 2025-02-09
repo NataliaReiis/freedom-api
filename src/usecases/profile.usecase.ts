@@ -1,5 +1,4 @@
 import { CreateProfile, UpdateProfile } from '../interfaces/profile.interface'
-import { CreateUserDto } from '../interfaces/user.interface'
 import { ProfileRepositoryPrisma } from '../repositories/profile.repository'
 
 class ProfileUseCase {

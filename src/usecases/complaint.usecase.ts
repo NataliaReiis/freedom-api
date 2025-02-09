@@ -6,7 +6,7 @@ import {
 } from '../interfaces/complaint.interface'
 
 class UseCaseComplaint {
-  private complaintRepository: ComplaintRepositoryPrisma
+  private readonly complaintRepository: ComplaintRepositoryPrisma
   constructor() {
     this.complaintRepository = new ComplaintRepositoryPrisma()
   }

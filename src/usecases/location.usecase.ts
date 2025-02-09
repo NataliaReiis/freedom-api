@@ -3,7 +3,7 @@ import { CreateLocationDto } from '../interfaces/location.interface'
 import { LocationRepositoryPrisma } from '../repositories/location.repository'
 
 class LocationUseCase {
-  private locationRepository: LocationRepositoryPrisma
+  private readonly locationRepository: LocationRepositoryPrisma
   constructor() {
     this.locationRepository = new LocationRepositoryPrisma()
   }

@@ -7,16 +7,21 @@ export async function profileRouter(fastify: FastifyInstance) {
 
   fastify.post<{ Body: CreateProfile }>('/', async (req, reply) => {
     try {
-      const { name, ...rest } = req.body
+      const { name, age, tel, userID, cpf, marital_status, sex } = req.body
 
       const data = await profileUseCase.create({
         name,
-        ...rest,
+        age,
+        tel,
+        userID,
+        cpf,
+        marital_status,
+        sex,
       })
 
       return reply.send(data)
     } catch (error) {
-      reply.send(error)
+      reply.send('Erro interno no servidor')
     }
   })
 

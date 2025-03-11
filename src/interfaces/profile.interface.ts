@@ -20,6 +20,6 @@ export type CreateProfileWithUser = {
   tel: string
   age: number
   sex?: string
-  cpf?: string
+  cpf: string
   marital_status?: string
 }

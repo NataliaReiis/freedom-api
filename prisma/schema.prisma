@@ -31,7 +31,7 @@ model Profile {
   id             String @id @default(uuid())
   name           String
   tel            String?
-  age             Int
+  age            Int
   sex            String? 
   cpf            String  @unique
   marital_status String?   
@@ -44,7 +44,6 @@ model Complaint {
   createdAt      DateTime       @default(now())
   typeComplaint  TypeComplaint
   nivelComplaint NivelComplaint
-  imageComplaint String?
   description    String
   userId         String
   user           User           @relation(fields: [userId], references: [id])
@@ -84,19 +83,19 @@ model Comment {
 }
 
 enum TypeComplaint {
-  BRIFERY // CHANTAGEM
-  HUMILIATION // HUMILHAÇÃO
-  AGGRESSION // AGRESSÃO
-  PERSECUTION // PERSEGUIÇÃO
-  PATRIMONIAL_VIOLATION // VIOLAÇÃO PATRIMONIAL
-  VERBAL_HARASSMENT //ASSÉDIO VERBAL
-  PSUCHOLOGICAL_HARASSMENT // ASSÉDIO PSICOLÓGICO
-  PHYSICAL_HARASSMENT // ASSÉDIO FÍSICO
-  OTHERS // OUTROS
+  CHANTAGEM 
+  HUMILHACAO
+  AGRESSAO 
+  PERSEGUICAO 
+  VIOLAÇÃO_PATRIMONIAL
+  VERBAL_HARASSMENT 
+  ASSEDIO_VERBAL 
+  ASSEDIO_FISICO 
+  OUTROS 
 }
 
 enum NivelComplaint {
-  LIGHT // LEVE
-  MEDIUM // MÉDIO
-  SEVERE // GRAVE
+  LEVE 
+  MEDIO 
+  GRAVE 
 }

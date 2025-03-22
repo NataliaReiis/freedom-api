@@ -63,6 +63,7 @@ export async function auth(fastify: FastifyInstance) {
   })
 
   //to-do: implementar validação de dados enviados para cadastro de novo usuario com o ZOD
+  //to-do: nao deixar passar o user se nao tiver as infos do perfil
 
   fastify.post<{ Body: CreateProfileWithUser }>(
     '/register',
@@ -79,7 +80,15 @@ export async function auth(fastify: FastifyInstance) {
         const verifyUser = await userUseCase.getByEmail(email)
 
         if (verifyUser) {
-          return reply.status(400).send('Email já cadastrado')
+          return reply.status(400).send({ message: 'Email já cadastrado' })
+        }
+
+        const cpfisVerify = await profileUseCase.getByCpf(cpf)
+
+        if (cpfisVerify) {
+          return reply.status(401).send({
+            message: 'Cpf já cadastrado',
+          })
         }
 
         const user = await userUseCase.create({

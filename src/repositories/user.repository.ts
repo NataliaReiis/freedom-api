@@ -10,7 +10,7 @@ export interface IUserRepository {
   findByEmail: (email: string) => Promise<User | null>
   create: (dto: CreateUserDto) => Promise<User>
   update: (id: string, updateUserDto: updateUserDto) => Promise<User>
-  delete: (id: string) => void
+  delete: (id: string) => Promise<void>
 }
 
 export default class UserRepositoryPrisma implements IUserRepository {
@@ -41,9 +41,7 @@ export default class UserRepositoryPrisma implements IUserRepository {
     })
   }
 
-  async delete(id: string) {
-    return await prisma.user.delete({
-      where: { id },
-    })
+  async delete(id: string): Promise<void> {
+    await prisma.user.delete({ where: { id } })
   }
 }

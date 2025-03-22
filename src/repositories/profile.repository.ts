@@ -5,9 +5,10 @@ import { CreateProfile, UpdateProfile } from '../interfaces/profile.interface'
 interface IProfileRepository {
   findByID: (id: string) => Promise<Profile | null>
   findAll: () => Promise<Profile[]>
+  findByCpf: (cpf: string) => Promise<Profile | null>
   create: (data: CreateProfile) => Promise<Profile>
   update: (id: string, data: UpdateProfile) => Promise<Profile>
-  delete: (id: string) => void
+  delete: (id: string) => Promise<void>
 }
 
 export class ProfileRepositoryPrisma implements IProfileRepository {
@@ -22,6 +23,10 @@ export class ProfileRepositoryPrisma implements IProfileRepository {
     return await prisma.profile.findMany()
   }
 
+  async findByCpf(cpf: string) {
+    return await prisma.profile.findUnique({ where: { cpf } })
+  }
+
   async create(data: CreateProfile) {
     return await prisma.profile.create({ data: data })
   }
@@ -30,7 +35,7 @@ export class ProfileRepositoryPrisma implements IProfileRepository {
     return await prisma.profile.update({ where: { id }, data: data })
   }
 
-  async delete(id: string) {
-    return await prisma.profile.delete({ where: { id } })
+  async delete(id: string): Promise<void> {
+    await prisma.profile.delete({ where: { id } })
   }
 }

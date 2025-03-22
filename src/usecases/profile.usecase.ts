@@ -15,6 +15,10 @@ class ProfileUseCase {
     return this.profileRepository.findAll()
   }
 
+  async getByCpf(cpf: string) {
+    return this.profileRepository.findByCpf(cpf)
+  }
+
   async create(data: CreateProfile) {
     return this.profileRepository.create(data)
   }

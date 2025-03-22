@@ -4,7 +4,7 @@ export type Profile = {
   tel: string
   age: number
   sex?: string
-  cpf?: string
+  cpf: string
   marital_status?: string
   userID: string
 }
